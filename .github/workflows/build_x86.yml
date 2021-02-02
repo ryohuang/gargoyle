@@ -1,0 +1,36 @@
+# This is a basic workflow that is manually triggered
+
+name: Build for x86
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Person to greet'
+        # Default value if no value is explicitly provided
+        default: 'World'
+        # Input has to be provided for the workflow to run
+        required: true
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build_x86:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Runs a single command using the runners shell
+    - name: Send greeting
+      run: echo "Hello ${{ github.event.inputs.name }}"
+    - uses: actions/checkout@v2
+      with:
+        repository: 'ryohuang/gargoyle'
+        path: 'gargoyle'
+        
+    - name: Build a docker image
+      run: |
+        cd $GITHUB_WORKSPACE/gargoyle/dev-utils/Docker
+        docker build -t gargoyle_builder_1.13.x .
