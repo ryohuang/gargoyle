@@ -33,17 +33,15 @@ jobs:
     - name: Build a docker image
       run: |
         cd $GITHUB_WORKSPACE/gargoyle/dev-utils/Docker
-        export UID=$(id -u)
-        export GID=$(id -g)
-        docker build --build-arg UID=$UID \
-                     --build-arg GID=$GID \
+        export DUID=$(id -u)
+        export DGID=$(id -g)
+        docker build --build-arg UID=$DUID \
+                     --build-arg GID=$DGID \
                      -t gargoyle_builder_1.13.x .
         
     - name: Build x86
       run: |
         id
-        export UID=$(id -u)
-        export GID=$(id -g)
         docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user gargoyle_builder_1.13.x /bin/bash -c "id && ls -l /home/user && make x86 FULL_BUILD=true"
         
     - name: Show outputs
