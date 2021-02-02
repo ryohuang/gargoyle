@@ -34,7 +34,13 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/gargoyle/dev-utils/Docker
         docker build -t gargoyle_builder_1.13.x .
-        docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user -it gargoyle_builder_1.13.x /bin/bash -c "make x86 FULL_BUILD=true"
+        
+    - name: Build x86
+      run: |
+        docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user gargoyle_builder_1.13.x /bin/bash -c "make x86 FULL_BUILD=true"
+        
+    - name: Show outputs
+      run: |
         echo "SHOW IMAGES"
         ls $GITHUB_WORKSPACE/gargoyle/images
         echo "SHOW PACKAGES"
