@@ -37,7 +37,8 @@ jobs:
         
     - name: Build x86
       run: |
-        docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user gargoyle_builder_1.13.x /bin/bash -c "make x86 FULL_BUILD=true"
+        id
+        docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user gargoyle_builder_1.13.x /bin/bash -c "id && ls -l /home/user && make x86 FULL_BUILD=true"
         
     - name: Show outputs
       run: |
