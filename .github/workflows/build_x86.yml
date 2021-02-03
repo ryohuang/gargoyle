@@ -42,7 +42,7 @@ jobs:
     - name: Build x86
       run: |
         id
-        docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user gargoyle_builder_1.13.x /bin/bash -c "id && ls -l /home/user && make x86.x64 FULL_BUILD=true"
+        docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user gargoyle_builder_1.13.x /bin/bash -c "id && ls -l /home/user && make FULL_BUILD=true slim"
         
     - name: Show outputs
       run: |
@@ -54,7 +54,7 @@ jobs:
     - name: Zip
       run: |
           cd $GITHUB_WORKSPACE/gargoyle
-          zip -r images.zip images/*
+          zip -r images.zip images
 
     - uses: actions/upload-artifact@v2
       with:
