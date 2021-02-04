@@ -31,9 +31,10 @@ jobs:
         path: 'gargoyle'
         
     - name: Install tools
+      env:
+        DEBIAN_FRONTEND: noninteractive
+        DEBCONF_NONINTERACTIVE_SEEN: true
       run: |
-        sudo export DEBIAN_FRONTEND=noninteractive; \
-        sudo export DEBCONF_NONINTERACTIVE_SEEN=true; \
         sudo echo 'tzdata tzdata/Areas select Etc' | debconf-set-selections; \
         sudo echo 'tzdata tzdata/Zones/Etc select UTC' | debconf-set-selections; \
         sudo apt-get update &&\
