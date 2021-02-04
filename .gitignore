@@ -1,0 +1,12 @@
+.cmake
+.config
+.npm
+.subversion
+.bash_history
+/built
+/*-src
+/compressed_*
+/downloaded
+/images
+/minifiers
+/package-prepare
