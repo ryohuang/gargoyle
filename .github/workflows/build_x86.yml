@@ -46,6 +46,7 @@ jobs:
         
     - name: Show outputs
       run: |
+        df -h
         echo "SHOW IMAGES"
         ls $GITHUB_WORKSPACE/gargoyle/images
         echo "SHOW PACKAGES"
