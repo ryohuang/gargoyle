@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Build for x86
+name: Build for x86 without docker
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -19,7 +19,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_x86:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     # Runs a single command using the runners shell
@@ -30,19 +30,21 @@ jobs:
         repository: 'ryohuang/gargoyle'
         path: 'gargoyle'
         
-    - name: Build a docker image
+    - name: Install tools
+      env:
+        DEBIAN_FRONTEND: noninteractive
+        DEBCONF_NONINTERACTIVE_SEEN: true
       run: |
-        cd $GITHUB_WORKSPACE/gargoyle/dev-utils/Docker
-        export DUID=$(id -u)
-        export DGID=$(id -g)
-        docker build --build-arg UID=$DUID \
-                     --build-arg GID=$DGID \
-                     -t gargoyle_builder_1.13.x .
+        sudo apt-get update &&\
+        sudo apt-get install -qqy --no-install-recommends build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo npm python-is-python3 ssh-client wget curl file screen && \
+        sudo apt-get clean && \
+        sudo rm -rf /var/lib/apt/lists/*
         
     - name: Build x86
       run: |
         id
-        docker run -v $GITHUB_WORKSPACE/gargoyle:/home/user gargoyle_builder_1.13.x /bin/bash -c "id && ls -l /home/user && make FULL_BUILD=true x86"
+        cd $GITHUB_WORKSPACE/gargoyle
+        make FULL_BUILD=true x86.x64
         
     - name: Show outputs
       run: |
