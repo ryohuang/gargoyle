@@ -34,7 +34,7 @@ jobs:
       run: |
         id
         cd $GITHUB_WORKSPACE/gargoyle
-        make FULL_BUILD=true x86.slim
+        make BUILD_THREADS=1 FULL_BUILD=true x86.slim
         
     - name: Show outputs
       run: |
